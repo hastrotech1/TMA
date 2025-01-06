@@ -16,14 +16,14 @@ const App: React.FC = () => {
     localStorage.setItem("tasks", JSON.stringify(newTasks));
   };
 
-  // const handleEditTask = (updatedTask: Task) => {
-  //   // Update the task and save
-  //   const newTasks = tasks.map((task) =>
-  //     task.id === updatedTask.id ? updatedTask : task
-  //   );
-  //   saveTasks(newTasks);
-  //   setEditingTask(null);
-  // };
+  const handleEditTask = (updatedTask: Task) => {
+    // Update the task and save
+    const newTasks = tasks.map((task) =>
+      task.id === updatedTask.id ? updatedTask : task
+    );
+    saveTasks(newTasks);
+    setEditingTask(null);
+  };
 
   const handleUpdateTask = (taskId: string, updatedTask: Partial<Task>) => {
     saveTasks(
@@ -52,9 +52,9 @@ const App: React.FC = () => {
         /> */}
         <TaskList
           tasks={tasks}
-          onAddTask={handleAddTask}
           onUpdateTask={handleUpdateTask}
           onDeleteTask={handleDeleteTask}
+          onAddTask={handleAddTask}
         />
       </div>
     </div>
