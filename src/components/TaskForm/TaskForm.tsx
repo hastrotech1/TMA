@@ -131,14 +131,6 @@ const TaskForm: React.FC<TaskFormProps> = ({
         <option value="In Progress">In Progress</option>
         <option value="Completed">Completed</option>
       </select>
-
-      <button
-        type="submit"
-        className="bg-blue-500 text-white p-2 rounded-lg w-full"
-        disabled={!formState.title || !formState.dueDate}
-      >
-        Add Task
-      </button>
       <button
         type="submit"
         className="bg-blue-500 text-white p-2 rounded-lg w-full"

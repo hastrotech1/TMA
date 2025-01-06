@@ -6,8 +6,9 @@ interface TaskListProps {
   tasks: Task[];
   onUpdateTask: (taskId: string, updatedTask: Partial<Task>) => void;
   onDeleteTask: (id: string) => void;
-
+  editingTask: Task | null;
   onAddTask: (task: Task) => void;
+  onEditTask: (updatedTask: Task) => void;
 }
 
 const TaskList: React.FC<TaskListProps> = ({
