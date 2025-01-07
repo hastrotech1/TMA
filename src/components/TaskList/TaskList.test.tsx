@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import TaskList from "./TaskList";
 import { Task } from "../../types/Tasks";
@@ -48,6 +47,7 @@ describe("TaskList", () => {
           sampleTasks.filter((task) => task.id !== taskId)
         }
         onAddTask={jest.fn()}
+        onEditTask={jest.fn()}
       />
     );
     expect(screen.getByText(/Task 1/i)).toBeInTheDocument();
@@ -68,6 +68,7 @@ describe("TaskList", () => {
         onDeleteTask={mockDeleteTask}
         onUpdateTask={jest.fn()}
         onAddTask={jest.fn()}
+        onEditTask={jest.fn()}
       />
     );
 
@@ -93,6 +94,7 @@ describe("TaskList", () => {
         onDeleteTask={mockOnDeleteTask}
         onUpdateTask={mockOnUpdateTask}
         onAddTask={mockOnAddTask}
+        onEditTask={jest.fn()}
       />
     );
 
@@ -108,6 +110,7 @@ describe("TaskList", () => {
         onDeleteTask={jest.fn()}
         onUpdateTask={mockUpdateTask}
         onAddTask={jest.fn()}
+        onEditTask={jest.fn()}
       />
     );
 

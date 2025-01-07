@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Task } from "../../types/Tasks";
 import TaskForm from "../TaskForm/TaskForm";
+import "../../index.css";
 
 interface TaskListProps {
   tasks: Task[];
   onUpdateTask: (taskId: string, updatedTask: Partial<Task>) => void;
   onDeleteTask: (id: string) => void;
   onAddTask: (task: Task) => void;
+  onEditTask: (taskId: string, updatedTask: Partial<Task>) => void;
 }
 
 const TaskList: React.FC<TaskListProps> = ({
@@ -51,69 +53,125 @@ const TaskList: React.FC<TaskListProps> = ({
   );
 
   return (
-    <div>
-      <TaskForm
-        onAddTask={handleAddTask}
-        onEditTask={handleEditTask}
-        editingTask={editingTask}
-      />
-      <h2 className="text-xl font-bold mb-4">Task List</h2>
-      <div className="flex gap-4 mb-4">
-        <select
-          aria-label="Filter tasks by priority"
-          onChange={(e) =>
-            setFilters((f) => ({ ...f, priority: e.target.value }))
-          }
-          className="p-2 border rounded-lg"
-        >
-          <option value="\">All Priorities</option>
-          <option>Low</option>
-          <option>Medium</option>
-          <option>High</option>
-        </select>
-        <select
-          aria-label="Filter tasks by status"
-          onChange={(e) =>
-            setFilters((f) => ({ ...f, status: e.target.value }))
-          }
-          className="p-2 border rounded-lg"
-        >
-          <option value="\">All Statuses</option>
-          <option>Pending</option>
-          <option>In Progress</option>
-          <option>Completed</option>
-        </select>
-      </div>
-      <ul className="space-y-4">
-        {filteredTasks.map((task) => (
-          <li key={task.id} className="bg-white p-4 shadow rounded-lg">
-            <h3 className="text-lg font-bold">{task.title}</h3>
-            <p>{task.description}</p>
-            <p className="text-sm text-gray-500">Due: {task.dueDate}</p>
-            <p>Priority: {task.priority}</p>
-            <p>Status: {task.status}</p>
-            <div className="space-x-2">
-              <button
-                onClick={() => handleStartEditing(task)}
-                className="bg-yellow-500 text-white px-4 py-2 rounded"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleRemoveTask(task.id)}
-                className="bg-red-500 text-white px-4 py-2 rounded"
-              >
-                Remove
-              </button>
-              <button
-                onClick={() => onUpdateTask(task.id, { status: "Completed" })}
-              >
-                Mark as Completed
-              </button>
+    <div className="space-y-6">
+      <div className="bg-black border-2 border-white rounded-lg p-6">
+        <TaskForm
+          onAddTask={handleAddTask}
+          onEditTask={handleEditTask}
+          editingTask={editingTask}
+        />
+        <h2 className="text-2xl font-semibold text-white mt-4 mb-6">
+          Task List
+        </h2>
+        <div className="text-2xl font-bold text-black mb-6">
+          <div className="flex flex-wrap gap-4 mb-6">
+            <select
+              aria-label="Filter tasks by priority"
+              onChange={(e) =>
+                setFilters((f) => ({ ...f, priority: e.target.value }))
+              }
+              className="px-4 py-2 border-2 border-gray-200 rounded-md 
+            focus:border-red-500 focus:ring-1 focus:ring-red-500 bg-white"
+            >
+              <option value="\">All Priorities</option>
+              <option>Low</option>
+              <option>Medium</option>
+              <option>High</option>
+            </select>
+
+            <select
+              aria-label="Filter tasks by status"
+              onChange={(e) =>
+                setFilters((f) => ({ ...f, status: e.target.value }))
+              }
+              className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="\">All Statuses</option>
+              <option>Pending</option>
+              <option>In Progress</option>
+              <option>Completed</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          {filteredTasks.map((task) => (
+            <div
+              key={task.id}
+              className="bg-white border-2 border-gray-200 rounded-lg p-4 
+              hover:border-black transition-colors duration-200"
+            >
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="text-lg font-bold text-black">{task.title}</h3>
+                  <p className="text-gray-600 mt-1">{task.description}</p>
+                </div>
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-4 text-sm">
+                <div className="flex items-center">
+                  <span className="text-gray-600">Due:</span>
+                  <span className="ml-2 font-medium text-black">
+                    {new Date(task.dueDate).toLocaleDateString()}
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <span className="text-gray-600">Priority:</span>
+                  <span
+                    className={`ml-2 px-2 py-1 rounded-full text-xs font-medium
+                    ${
+                      task.priority === "High"
+                        ? "bg-red-100 text-red-800"
+                        : task.priority === "Medium"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : "bg-green-100 text-green-800"
+                    }`}
+                  >
+                    {task.priority}
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <span className="text-gray-500">Status:</span>
+                  <span
+                    className={`ml-2 px-2 py-1 rounded-full text-xs font-medium
+                    ${
+                      task.status === "Completed"
+                        ? "bg-green-100 text-green-800"
+                        : task.status === "In Progress"
+                        ? "bg-blue-100 text-blue-800"
+                        : "bg-gray-100 text-gray-800"
+                    }`}
+                  >
+                    {task.status}
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleStartEditing(task)}
+                    className="px-3 py-1 text-sm bg-black text-white rounded 
+                    hover:bg-gray-800 transition-colors"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleRemoveTask(task.id)}
+                    className="px-3 py-1 text-sm bg-red-600 text-white rounded 
+                    hover:bg-red-700 transition-colors"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
             </div>
-          </li>
-        ))}
-      </ul>
+          ))}
+
+          {filteredTasks.length === 0 && (
+            <div className="text-center py-8 text-gray-500">
+              No tasks found. Create a new task to get started!
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

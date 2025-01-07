@@ -30,6 +30,7 @@ const ParentComponent: React.FC = () => {
       onDeleteTask={handleDeleteTask}
       onAddTask={handleAddTask}
       onUpdateTask={handleUpdateTask}
+      onEditTask={handleUpdateTask}
     />
   );
 };

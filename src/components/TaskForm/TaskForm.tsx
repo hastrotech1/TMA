@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Task } from "../../types/Tasks";
+import "../../index.css";
 
 type TaskFormProps = {
   onAddTask: (task: Task) => void;
@@ -59,81 +60,123 @@ const TaskForm: React.FC<TaskFormProps> = ({
 
   return (
     <form
-      className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      className="bg-black border-2 border-white rounded-lg shadow-lg p-6"
       onSubmit={handleSubmit}
     >
-      <h2 className="text-2xl font-bold mb-4">
+      <h2 className="text-2xl font-bold text-white mb-6">
         {editingTask ? "Edit Task" : "Create Task"}
       </h2>
 
-      <label htmlFor="title" className="block text-sm font-medium mb-2">
-        Title
-      </label>
-      <input
-        id="title"
-        name="title"
-        value={formState.title}
-        onChange={handleChange}
-        placeholder="Title"
-        className="block w-full p-2 border mb-4 rounded-lg"
-      />
+      <div className="space-y-4">
+        <div>
+          <label
+            htmlFor="title"
+            className="block text-sm font-bold text-black mb-1"
+          >
+            Title
+          </label>
+          <input
+            id="title"
+            name="title"
+            value={formState.title}
+            onChange={handleChange}
+            placeholder="What are you planning?"
+            className="w-full px-4 py-2 border-2 border-gray-200 rounded-md 
+            focus:border-red-500 focus:ring-1 focus:ring-red-500 
+            placeholder-gray-400 bg-white"
+          />
+        </div>
 
-      <label htmlFor="description" className="block text-sm font-medium mb-2">
-        Description
-      </label>
-      <textarea
-        id="description"
-        name="description"
-        value={formState.description}
-        onChange={handleChange}
-        placeholder="Description"
-        className="block w-full p-2 border mb-4 rounded-lg"
-      />
+        <div>
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Description
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            value={formState.description}
+            onChange={handleChange}
+            placeholder="Enter description"
+            rows={3}
+            className="w-full px-4 py-2 border-2 border-gray-200 rounded-md 
+            focus:border-red-500 focus:ring-1 focus:ring-red-500 
+            placeholder-gray-400 bg-white"
+          />
+        </div>
+      </div>
 
-      <label htmlFor="dueDate" className="block text-sm font-medium mb-2">
-        Due Date
-      </label>
-      <input
-        id="dueDate"
-        name="dueDate"
-        value={formState.dueDate}
-        onChange={handleChange}
-        type="date"
-        className="block w-full p-2 border mb-4 rounded-lg"
-      />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label
+            htmlFor="dueDate"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Due Date
+          </label>
+          <input
+            id="dueDate"
+            name="dueDate"
+            value={formState.dueDate}
+            onChange={handleChange}
+            type="date"
+            className="w-full px-4 py-2 border-2 border-gray-200 rounded-md 
+            focus:border-red-500 focus:ring-1 focus:ring-red-500 
+            placeholder-gray-400 bg-white"
+          />
+        </div>
 
-      <label htmlFor="priority" className="block text-sm font-medium mb-2">
-        Priority
-      </label>
-      <select
-        id="priority"
-        name="priority"
-        value={formState.priority}
-        onChange={handleChange}
-        className="block w-full p-2 border mb-4 rounded-lg"
-      >
-        <option value="Low">Low</option>
-        <option value="Medium">Medium</option>
-        <option value="High">High</option>
-      </select>
+        <div>
+          <label
+            htmlFor="priority"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Priority
+          </label>
+          <select
+            id="priority"
+            name="priority"
+            value={formState.priority}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border-2 border-gray-200 rounded-md 
+            focus:border-red-500 focus:ring-1 focus:ring-red-500 
+            placeholder-gray-400 bg-white"
+          >
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
 
-      <label htmlFor="status" className="block text-sm font-medium mb-2">
-        Status
-      </label>
-      <select
-        id="status"
-        name="status"
-        value={formState.status}
-        onChange={handleChange}
-        className="block w-full p-2 border mb-4 rounded-lg"
-      >
-        <option value="Pending">Pending</option>
-        <option value="In Progress">In Progress</option>
-        <option value="Completed">Completed</option>
-      </select>
+        <div>
+          <label
+            htmlFor="status"
+            className="block text-sm font-medium text-white mb-1"
+          >
+            Status
+          </label>
+          <select
+            id="status"
+            name="status"
+            value={formState.status}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border-2 border-gray-200 rounded-md 
+            focus:border-red-500 focus:ring-1 focus:ring-red-500 
+            placeholder-gray-400 bg-white"
+          >
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+      </div>
       <button
         type="submit"
-        className="bg-blue-500 text-white p-2 rounded-lg w-full"
+        className="w-full mt-6 px-6 py-3 bg-white text-black font-medium rounded-md
+            hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500 
+            disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
         disabled={!formState.title || !formState.dueDate}
       >
         {editingTask ? "Update Task" : "Add Task"}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TaskList from "./components/TaskList/TaskList";
 import { Task } from "./types/Tasks";
-import TaskForm from "./components/TaskForm/TaskForm";
+// import TaskForm from "./components/TaskForm/TaskForm";
 import "./index.css";
 
 const App: React.FC = () => {
@@ -9,20 +9,20 @@ const App: React.FC = () => {
     const savedTasks = localStorage.getItem("tasks");
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
-  const [editingTask, setEditingTask] = useState<Task | null>(null);
+  // const [editingTask, setEditingTask] = useState<Task | null>(null);
 
   const saveTasks = (newTasks: Task[]) => {
     setTasks(newTasks);
     localStorage.setItem("tasks", JSON.stringify(newTasks));
   };
 
-  const handleEditTask = (updatedTask: Task) => {
+  const handleEditTask = (taskId: string, updatedTask: Partial<Task>) => {
     // Update the task and save
     const newTasks = tasks.map((task) =>
-      task.id === updatedTask.id ? updatedTask : task
+      task.id === taskId ? { ...task, ...updatedTask } : task
     );
     saveTasks(newTasks);
-    setEditingTask(null);
+    // setEditingTask(null);
   };
 
   const handleUpdateTask = (taskId: string, updatedTask: Partial<Task>) => {
@@ -31,7 +31,7 @@ const App: React.FC = () => {
         task.id === taskId ? { ...task, ...updatedTask } : task
       )
     );
-    setEditingTask(null);
+    // setEditingTask(null);
   };
 
   const handleAddTask = (task: Task) => {
@@ -43,8 +43,14 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      {/* Content wrapper */}
+      <div className="w-full max-w-3xl mx-auto">
+        {/* Header section */}
+        <header className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-white mb-2">Task Manager</h1>
+          <p className="text-gray-500 mb-8">Organize your tasks efficiently</p>
+        </header>
         {/* <TaskForm
           onAddTask={handleAddTask}
           onEditTask={handleEditTask}
@@ -53,6 +59,7 @@ const App: React.FC = () => {
         <TaskList
           tasks={tasks}
           onUpdateTask={handleUpdateTask}
+          onEditTask={handleEditTask}
           onDeleteTask={handleDeleteTask}
           onAddTask={handleAddTask}
         />
