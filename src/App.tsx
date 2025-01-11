@@ -48,7 +48,7 @@ const App: React.FC = () => {
       <div className="w-full max-w-3xl mx-auto">
         {/* Header section */}
         <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Task Manager</h1>
+          <h1 className="text-4xl font-bold text-white mb-2">DoIt ✅</h1>
           <p className="text-gray-500 mb-8">Organize your tasks efficiently</p>
         </header>
         {/* <TaskForm
